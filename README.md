@@ -9,6 +9,7 @@ My personal python **matplotlib** wrapper for creating publication-level scienti
 
 ```python
 import numpy as np
+# our wrapper
 import columnplots as clp
 
 # turn this parameter to false if LaTeX is not installed
@@ -60,3 +61,9 @@ clp.adjust(tight_layout=True, savefile="example.png")
 After running this python script, we obtain the following figure:
 
 ![hustlin_erd](examples/example.png)
+
+
+This wrapper has been used in several other Github projects, including
+- https://github.com/TaoELi/cavity-md-ipi
+- https://github.com/TaoELi/cavmd_examples_h2o
+- https://github.com/TaoELi/cavmd_examples_co2
