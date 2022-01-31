@@ -1,13 +1,3 @@
-# columnplots
-My personal python **matplotlib** wrapper for creating publication-level scientific figures with minimal effort.
-
-- Dependence: A recent version of **numpy**, **matplotlib**, and **LaTeX**.
-
-- Install: Include src/ folder as the **$PYTHONPATH** environment in .bashrc; or simply copy src/columnplots.py to the same folder as the plotting script.
-
-- Example in examples/simple.py illustrates how to use this wrapper to reduce the code effort for generating the publication-level figures for scientific journals.
-
-```python
 import numpy as np
 import columnplots as clp
 
@@ -54,9 +44,5 @@ clp.plotone(xs, ys, axes[1,1], labels=labels, colors=colors, lw=1, showlegend=Fa
 # [Optional] adjust the legend position shown in Fig. (a)
 axes[0,0].legend(loc="lower right")
 
-# 3. tune the spacing between subplots and save file as example.pdf
+# 3. tune the spacing between subplots and save file as example.png
 clp.adjust(tight_layout=True, savefile="example.png")
-```
-After running this python script, we obtain the following figure:
-
-![hustlin_erd](examples/example.png)
