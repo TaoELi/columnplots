@@ -15,6 +15,8 @@ sky_blue = "#009BD6"
 brown = "#7B2B15"
 red_economist = "#E3000F"
 black = "k"
+dark_green = "#285F17"
+meganta = "#907DAC"
 lightblue_background = "#D9E5EC"
 lightgray_background = "#F6F6F4"
 
@@ -32,7 +34,11 @@ def initialize(col=1, row=1, width=4,
                return_fig_args=False,
                LaTeX=False
                ):
-    plt.rc('font', family='sans-serif', serif='Osaka')
+    plt.rcParams['mathtext.fontset'] = 'custom'
+    plt.rcParams['mathtext.it'] = 'Helvetica'
+    plt.rcParams['mathtext.rm'] = 'Helvetica'
+    plt.rc('font', family='sans-serif', serif='Helvetica')
+    #plt.rc('font', family='sans-serif', serif='Osaka')
     plt.rc('text', usetex=LaTeX)
     plt.rc('xtick', labelsize=fontsize)
     plt.rc('ytick', labelsize=fontsize)
@@ -120,6 +126,7 @@ def plotone(
     linestyles=None,
     labels=None,
     lw=2,
+    lws=None,
     markersize=None,
     xlabel=None,
     ylabel=None,
@@ -153,19 +160,21 @@ def plotone(
     else:
         yorder = 0
     lines = []
+    if lws is None:
+        lws = [lw] * len(xs)
     if colors == None:
         for i in range(len(xs)):
             if labels == None:
-                line, = ax.plot(xs[i], ys[i]/10**yorder, lw=lw, markersize=markersize, mfc=mfc, alpha=1.0 - i*alphaspacing if alphaspacing else alpha)
+                line, = ax.plot(xs[i], ys[i]/10**yorder, lw=lws[i], markersize=markersize, mfc=mfc, alpha=1.0 - i*alphaspacing if alphaspacing else alpha)
             else:
-                line, = ax.plot(xs[i], ys[i]/10**yorder, lw=lw, label=labels[i], markersize=markersize, mfc=mfc, alpha=1.0 - i*alphaspacing if alphaspacing else alpha)
+                line, = ax.plot(xs[i], ys[i]/10**yorder, lw=lws[i], label=labels[i], markersize=markersize, mfc=mfc, alpha=1.0 - i*alphaspacing if alphaspacing else alpha)
             lines.append(line)
     else:
         for i in range(len(xs)):
             if labels == None:
-                line, = ax.plot(xs[i], ys[i]/10**yorder, colors[i], lw=lw, markersize=markersize, mfc=mfc, alpha=1.0 - i*alphaspacing if alphaspacing else alpha)
+                line, = ax.plot(xs[i], ys[i]/10**yorder, colors[i], lw=lws[i], markersize=markersize, mfc=mfc, alpha=1.0 - i*alphaspacing if alphaspacing else alpha)
             else:
-                line, = ax.plot(xs[i], ys[i]/10**yorder, colors[i], lw=lw, label=labels[i], markersize=markersize, mfc=mfc, alpha=1.0 - i*alphaspacing if alphaspacing else alpha)
+                line, = ax.plot(xs[i], ys[i]/10**yorder, colors[i], lw=lws[i], label=labels[i], markersize=markersize, mfc=mfc, alpha=1.0 - i*alphaspacing if alphaspacing else alpha)
             lines.append(line)
     if yscientific == True:
         ax.ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
