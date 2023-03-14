@@ -4,6 +4,8 @@ Created by Tao E. Li for scientific plotting @ 2021
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import matplotlib.image as mpimg
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 #mpl.use('pdf')
 
 # global variables for personal colors
@@ -34,6 +36,28 @@ def initialize(col=1, row=1, width=4,
                return_fig_args=False,
                LaTeX=False
                ):
+    '''
+    Initialize the plotting environment
+    
+    Args:
+    
+    col: number of plots in the vertical direction 
+    row: number of plots in the horizontal direction
+    width: width of the whole figure in inches
+    height: hight of whole figure in inches, default value: 0.618 * width
+    sharex: if sharing the x axis for all subplots, e.g., all figures have the same x variable
+    sharey: if sharing the y axis for all subplots, e.g., all figures have the same y variable
+    commonX: [x, y, "x label"], x, y: relative location of the x label in the figure
+    commonY: [x, y, "y label"], x, y: relative location of the y label in the figure
+    commonYs: [commonY, commonY, ...], in case there are many y labels to be labeled
+    labelthem: True/False, if label (a), (b), ... for each subplot
+    labelsize: font size of the (a), (b), ... labels
+    labelthemPosition: [x, y]: relative location of the (a), (b) ... label in each subplot
+    fontsize: fontsize of the x, y labels for the whole figure
+    return_fig_args: False: axes = initialize(); True: fig, axes = initialize()
+    LaTeX: True/False, if use LaTeX rendering option
+    '''
+
     plt.rcParams['mathtext.fontset'] = 'custom'
     plt.rcParams['mathtext.it'] = 'Helvetica'
     plt.rcParams['mathtext.rm'] = 'Helvetica'
@@ -147,6 +171,7 @@ def plotone(
     legendFontSize=None,
     legndFrameOn=True,
     legendFancyBox=True,
+    legendloc=None,
     legendFaceColor="inherit",
     legendEdgeColor="inherit",
     rainbowColor=False,
@@ -205,10 +230,6 @@ def plotone(
         ax.xaxis.set_ticks_position('both')
         ax.yaxis.set_ticks_position('both')
     # Save file
-    if showlegend:
-        ax.legend(fontsize=legendFontSize, markerscale=legendFontSize,
-            frameon=legndFrameOn, fancybox=legendFancyBox,
-            facecolor=legendFaceColor, edgecolor=legendEdgeColor)
     if sharewhichx != None:
         ax.get_shared_x_axes().join(sharewhichx, ax)
         sharewhichx.set_xticklabels([])
@@ -223,7 +244,29 @@ def plotone(
     if linestyles != None:
         for i,j in enumerate(ax.lines):
             j.set_linestyle(linestyles[i])
+    if showlegend:
+        ax.legend(fontsize=legendFontSize, markerscale=legendFontSize,
+            frameon=legndFrameOn, fancybox=legendFancyBox,
+            facecolor=legendFaceColor, edgecolor=legendEdgeColor,
+            loc=legendloc)
     return lines
+
+
+def add_figure(imag_filename, ax, zoom=0.16, location=(0.0, 0.0)):
+    '''
+    Add a figure on top of the plot
+
+    Args:
+    imag_filename: filename of the imag
+    ax: axis of the subplot
+    zoom: 0.0 ~ 1.0 floating point to control the size of the inset figure
+    location: (x, y), a tuple to set the location of the figure in the units of the axis values
+    '''
+    data_img = mpimg.imread(imag_filename)
+    imagebox = OffsetImage(data_img, zoom=zoom)
+    ab = AnnotationBbox(imagebox, location, frameon=False)
+    ab.set(zorder=-1)
+    ax.add_artist(ab)
 
 def broken_y(ax, ax2, d=0.015, ymin_0=0, ymax_0=0.22, ymin_1=0.78, ymax_1=1.0):
     # zoom-in / limit the view to different portions of the data
