@@ -1,4 +1,5 @@
 import numpy as np
+# our wrapper
 import columnplots as clp
 
 # turn this parameter to false if LaTeX is not installed
@@ -25,9 +26,9 @@ axes = clp.initialize(col=2, row=2,
                labelthem=True, labelsize=11, labelthemPosition=[0.1, 0.95],
                fontsize=10)
 
-# 2. Plot at each figure
+# 2. Plot each figure
 clp.plotone(xs, ys, axes[0,0], labels=labels, colors=colors, lw=1,
-            ylabel="$y$ value",
+            ylabel="$y$ value",  showlegend=True, legendloc="lower right",
             yscientificAtLabel=True)
 
 clp.plotone(xs, ys, axes[0,1], labels=labels, colors=colors, lw=1, showlegend=False,
@@ -40,9 +41,6 @@ clp.plotone(xs, ys, axes[1,0], labels=labels, colors=colors, lw=1, showlegend=Fa
 clp.plotone(xs, ys, axes[1,1], labels=labels, colors=colors, lw=1, showlegend=False,
             xlabel="$x$ value",
             yscientificAtLabel=True)
-
-# [Optional] adjust the legend position shown in Fig. (a)
-axes[0,0].legend(loc="lower right")
 
 # 3. tune the spacing between subplots and save file as example.png
 clp.adjust(tight_layout=True, savefile="example.png")
