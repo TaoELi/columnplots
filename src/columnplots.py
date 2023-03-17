@@ -3,10 +3,8 @@ Created by Tao E. Li for scientific plotting @ 2021
 '''
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import matplotlib.image as mpimg
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-#mpl.use('pdf')
 
 # global variables for personal colors
 red = "#EA4E34"
@@ -18,9 +16,10 @@ brown = "#7B2B15"
 red_economist = "#E3000F"
 black = "k"
 dark_green = "#285F17"
-meganta = "#907DAC"
+magenta = "#907DAC"
 lightblue_background = "#D9E5EC"
 lightgray_background = "#F6F6F4"
+
 
 def initialize(col=1, row=1, width=4,
                height=None,
@@ -30,9 +29,10 @@ def initialize(col=1, row=1, width=4,
                commonY=None,
                commonYs=None,
                labelthem=None,
-               labelsize=None,
+               labelsize=11,
                labelthemPosition=None,
-               fontsize=8,
+               fontsize=10,
+               fontname="Helvetica",
                return_fig_args=False,
                LaTeX=False
                ):
@@ -58,12 +58,17 @@ def initialize(col=1, row=1, width=4,
     LaTeX: True/False, if use LaTeX rendering option
     '''
 
+    plt.rcParams['font.family'] = 'sans-serif'
+    plt.rcParams['font.sans-serif'] = fontname
+    plt.rcParams['text.usetex'] = LaTeX
+    plt.rcParams['text.latex.preamble'] = r'\usepackage{amsmath}\boldmath\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}'
+    plt.rcParams['axes.unicode_minus'] = False
     plt.rcParams['mathtext.fontset'] = 'custom'
-    plt.rcParams['mathtext.it'] = 'Helvetica'
-    plt.rcParams['mathtext.rm'] = 'Helvetica'
-    plt.rc('font', family='sans-serif', serif='Helvetica')
-    #plt.rc('font', family='sans-serif', serif='Osaka')
-    plt.rc('text', usetex=LaTeX)
+    plt.rcParams['mathtext.rm'] = '{}'.format(fontname)
+    plt.rcParams['mathtext.it'] = '{}:italic'.format(fontname)
+    plt.rcParams['mathtext.bf'] = '{}:bold'.format(fontname)
+
+    #plt.rcParams['text.latex.preamble'] = r'\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}'
     plt.rc('xtick', labelsize=fontsize)
     plt.rc('ytick', labelsize=fontsize)
     plt.rc('axes', labelsize=fontsize)
@@ -123,6 +128,7 @@ def initialize(col=1, row=1, width=4,
         return fig, axes
     else:
         return axes
+
 
 def initialize_gridSpec(col=1, row=1, width=4,
                height=None,

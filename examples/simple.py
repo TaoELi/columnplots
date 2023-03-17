@@ -2,7 +2,7 @@ import numpy as np
 import columnplots as clp
 
 # turn this parameter to false if LaTeX is not installed
-if_latex=True
+if_latex=False
 
 # prepare x data for plotting
 x = np.linspace(0, 10, 10)
@@ -20,10 +20,10 @@ labels = ["$y_1$", "$y_2$"]
 
 # 1. Initialize a 2x2 figure
 axes = clp.initialize(col=2, row=2,
-               width=8.6, height=8.6*0.618,
+               width=6.4, height=6.4*0.618,
                LaTeX=if_latex,
-               labelthem=True, labelthemPosition=[0.1, 0.95],
-               fontsize=12)
+               labelthem=True, labelsize=11, labelthemPosition=[0.1, 0.95],
+               fontsize=10)
 
 # 2. Plot at each figure
 clp.plotone(xs, ys, axes[0,0], labels=labels, colors=colors, lw=1,
