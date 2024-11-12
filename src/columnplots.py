@@ -62,8 +62,10 @@ def initialize(col=1, row=1, width=4,
     plt.rcParams['font.sans-serif'] = fontname
     plt.rcParams['text.usetex'] = LaTeX
     plt.rcParams['text.latex.preamble'] = r'\usepackage{amsmath}\boldmath\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}'
+    plt.rcParams['text.latex.preamble'] = r'\usepackage{amsmath}\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}'
     plt.rcParams['axes.unicode_minus'] = False
     plt.rcParams['mathtext.fontset'] = 'custom'
+    plt.rcParams['mathtext.fontset'] = 'stixsans'
     plt.rcParams['mathtext.rm'] = '{}'.format(fontname)
     plt.rcParams['mathtext.it'] = '{}:italic'.format(fontname)
     plt.rcParams['mathtext.bf'] = '{}:bold'.format(fontname)
@@ -299,6 +301,20 @@ def broken_y(ax, ax2, d=0.015, ymin_0=0, ymax_0=0.22, ymin_1=0.78, ymax_1=1.0):
     ax2.plot((-d, +d), (1 - d, 1 + d), **kwargs)  # bottom-left diagonal
     ax2.plot((1 - d, 1 + d), (1 - d, 1 + d), **kwargs)  # bottom-right diagonal
 
+
+def subplots_adjust(left=0.1, right=0.9, bottom=0.1, top=0.9, wspace=0.2):
+    '''
+    Adjust the subplot layout for each figure
+    :param left:
+    :param right:
+    :param bottom:
+    :param top:
+    :param wspace:
+    :return:
+    '''
+    plt.subplots_adjust(left=left, right=right, bottom=bottom, top=top, wspace=wspace)
+
+
 def adjust(
     wspace=0,
     hspace=0,
@@ -306,7 +322,6 @@ def adjust(
     savefile=None,
     includelegend=None
     ):
-    #plt.subplots_adjust(wspace=wspace, hspace=hspace)
     if tight_layout == True:
         plt.tight_layout()
     if savefile != None and includelegend == None:
